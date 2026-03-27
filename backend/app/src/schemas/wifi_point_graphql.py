@@ -19,8 +19,8 @@ class WifiPointGraphQL:
         return cls(
             id=instance.id,
             original_id=instance.original_id,
-            programa=instance.programa,
-            alcaldia=instance.alcaldia,
-            latitud=instance.latitud,
-            longitud=instance.longitud,
+            programa=instance.program,
+            alcaldia=instance.town_hall,
+            latitud=instance.lat,
+            longitud=instance.ltg,
         )
