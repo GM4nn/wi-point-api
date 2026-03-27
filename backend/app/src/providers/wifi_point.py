@@ -19,9 +19,11 @@ class WifiPointProvider:
     def __init__(self, db_session: Session) -> None:
         self._db_session: Session = db_session
 
-    def get_by_id(self, point_id: int) -> WifiPointGraphQL | None:
-        
-        wifi_point =  self._db_session.query(WifiPoint).get(point_id)
+    def get_by_original_id(self, original_id: str) -> WifiPointGraphQL | None:
+
+        wifi_point = self._db_session.query(WifiPoint).filter(
+            WifiPoint.original_id == original_id
+        ).first()
 
         if wifi_point:
             return WifiPointGraphQL.from_instance(wifi_point)
@@ -30,9 +32,16 @@ class WifiPointProvider:
         self,
         offset: int,
         limit: int,
+        filters: list[ColumnElement[bool]] | None = None
     ) -> PaginationGraphQL:
 
-        total_data: int = self._db_session.query(WifiPoint.id).count()
+        query_wifi_point: Query[WifiPoint] = self._db_session.query(WifiPoint)
+
+        if filters:
+            for f in filters:
+                query_wifi_point = query_wifi_point.filter(f)
+
+        total_data: int = query_wifi_point.count()
         total_pages_or_last_page: int = ceil(total_data / limit ) or 1
 
         current_page: int = (offset // limit ) + 1
@@ -56,14 +65,14 @@ class WifiPointProvider:
         order_by: UnaryExpression | ColumnElement | None = None,
     ) -> PaginatedResponseGraphQL:
 
-        pagination_data: PaginationGraphQL = self.get_pagination_data(offset, limit)
+        pagination_data: PaginationGraphQL = self.get_pagination_data(offset, limit, filters)
         query_wifi_point: Query[WifiPoint] = self._db_session.query(WifiPoint)
 
         if filters:
             for f in filters:
                 query_wifi_point = query_wifi_point.filter(f)
 
-        if order_by:
+        if order_by is not None:
             query_wifi_point = query_wifi_point.order_by(order_by)
 
         wifi_points: list[WifiPoint] = query_wifi_point\
