@@ -24,8 +24,3 @@ class Base:
         default=lambda: datetime.now(UTC),
         onupdate=lambda: datetime.now(UTC)
     )
-    is_archived: Mapped[bool] = mapped_column(
-        Boolean,
-        default=False,
-        nullable=False
-    )
