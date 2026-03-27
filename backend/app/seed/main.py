@@ -49,22 +49,16 @@ class Seed():
             if is_first_time:
                 wpv = self._wpv_provider.create(clean_date, file_name)
 
-            if is_first_time or clean_date > wpv.last_update:
+            elif clean_date > wpv.last_update:
+                self._wpv_provider.update(file_name=file_name, last_update=clean_date)
 
-                print("--> INSERTING OR UPDATING DATA IF FIRTS TIME OR THE LAST UPDATE IS GREATER...")
-
-                # exists new data or is first time
-                loader: WifiPointLoader = WifiPointLoader()
-
-                dt: pd.DataFrame = loader.read_file(file)
-
-                loader.load(dt)
-            
             else:
-                print("--> ALL DATA SYNC")
-        
-        else:
-            print("--> WITHOUT LAST UPDATE")
+                print("--> DATA IS UP TO DATE, SKIPPING...")
+                return
+
+            loader: WifiPointLoader = WifiPointLoader()
+            dt: pd.DataFrame = loader.read_file(file)
+            loader.load(dt)
 
 if __name__ == "__main__":
     seed = Seed()

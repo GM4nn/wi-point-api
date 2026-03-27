@@ -16,6 +16,23 @@ class WifiPointVersionProvider:
     def get(self) -> WifiPointVersion | None:
         return self._db_session.query(WifiPointVersion).first()
 
+    def update(
+        self,
+        last_update: datetime,
+        file_name: str,
+    ) -> WifiPointVersion:
+
+        wpv: WifiPointVersion = self._db_session.query(WifiPointVersion).first()
+
+        wpv.version += 1
+        wpv.last_update = last_update
+        wpv.file_name = file_name
+
+        self._db_session.commit()
+        self._db_session.refresh(wpv)
+
+        return wpv
+
     def create(
         self,
         last_update: datetime,
