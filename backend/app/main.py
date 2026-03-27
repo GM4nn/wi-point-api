@@ -11,10 +11,15 @@ from app.core.base import Base
 # grapql schema
 from app.src.graphql.schema import graphql_router
 
+# seed
+from app.seed.main import Seed
+
 
 @asynccontextmanager
 async def lifespan(_app: FastAPI) -> AsyncGenerator[None, None]:
-    #Base.metadata.create_all(bind=engine)
+    # execute scraper to get xlsx with wifi points data
+    seed = Seed()
+    seed.run_seed()
     yield
 
 app = FastAPI(

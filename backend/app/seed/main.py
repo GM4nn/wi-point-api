@@ -36,7 +36,7 @@ class Seed():
         # Get download url file
         url: str | None = scraper.extract_download_url()
         file_name: str = url.split("/")[-1]
-        print(f"--> DATA SET URL -> {clean_date}")
+        print(f"--> DATA SET URL -> {url}")
 
         # Get file
         file: bytes | None = scraper.get_file_from_url(url)
@@ -59,6 +59,12 @@ class Seed():
                 dt: pd.DataFrame = loader.read_file(file)
 
                 loader.load(dt)
+            
+            else:
+                print("--> ALL DATA SYNC")
+        
+        else:
+            print("--> WITHOUT LAST UPDATE")
 
 if __name__ == "__main__":
     seed = Seed()
