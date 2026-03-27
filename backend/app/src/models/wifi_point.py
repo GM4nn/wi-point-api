@@ -13,7 +13,7 @@ class WifiPoint(Base):
 
     __tablename__ = "wifi_points"
 
-    original_id: Mapped[str | None] = mapped_column(String(50), nullable=True)
+    original_id: Mapped[str | None] = mapped_column(String(100), nullable=True, unique=True)
     program: Mapped[str | None] = mapped_column(String(255), nullable=True)
     town_hall: Mapped[str] = mapped_column(String(255), nullable=False, index=True)
     lat: Mapped[float] = mapped_column(Float, nullable=False)

@@ -8,7 +8,7 @@ from alembic import context
 # app
 from app.core.config import settings
 from app.core.base import Base
-from app.src.models import WifiPoint  # noqa: F401
+from app.src.models import *
 
 
 # this is the Alembic Config object, which provides
