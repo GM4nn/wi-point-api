@@ -43,15 +43,13 @@ class WifiPointQuery:
             order_by=order_by,
         )
 
-    @strawberry.field(description="Obtener un punto WiFi por su ID")
+    @strawberry.field(description="Obtener un punto WiFi por su original_id")
     def wifi_point(
         self,
         info: strawberry.types.Info,
-        point_id: int = strawberry.argument(description="ID del punto WiFi")
+        original_id: str = strawberry.argument(description="ID original del punto WiFi")
     ) -> WifiPointGraphQL | None:
         db: Session = info.context["db"]
 
         provider: WifiPointProvider = WifiPointProvider(db)
-        point: WifiPointGraphQL | None = provider.get_by_id(point_id)
-    
-        return point
+        return provider.get_by_original_id(original_id)
