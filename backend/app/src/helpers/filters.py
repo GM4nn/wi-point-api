@@ -25,7 +25,7 @@ class WifiPointHelper:
 
     def build_town_all_filter(self) -> ColumnElement[bool]:
         return WifiPoint.town_hall.ilike(
-            f"%{self.filters.town_hall.strip()}%"
+            f"%{self._filters.town_hall.strip()}%"
         )
 
     def build_filters_and_order(self) -> tuple[list[ColumnElement[bool]], ColumnElement | None]:
