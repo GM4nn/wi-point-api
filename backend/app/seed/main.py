@@ -18,6 +18,7 @@ class Seed():
 
     def __init__(self) -> None:
         self._wpv_provider: WifiPointVersionProvider = WifiPointVersionProvider(SessionLocal())
+        self._scraper: ScraperWiFiPoints = ScraperWiFiPoints()
 
     def clean_date(self, raw_date: str) -> datetime | None:
         return dateparser.parse(raw_date)
@@ -26,20 +27,18 @@ class Seed():
         
         print("-> INITIALIZING SEED DATA FROM XLSX")
 
-        scraper: ScraperWiFiPoints = ScraperWiFiPoints()
-
         # Get last update of file
-        last_update: str | None = scraper.extract_last_update_date()
+        last_update: str | None = self._scraper.extract_last_update_date()
         clean_date: datetime | None = self.clean_date(last_update)
         print(f"--> LAST UPDATE OF DATA SET -> {clean_date}")
 
         # Get download url file
-        url: str | None = scraper.extract_download_url()
+        url: str | None = self._scraper.extract_download_url()
         file_name: str = url.split("/")[-1]
         print(f"--> DATA SET URL -> {url}")
 
         # Get file
-        file: bytes | None = scraper.get_file_from_url(url)
+        file: bytes | None = self._scraper.get_file_from_url(url)
 
         if clean_date:
 
