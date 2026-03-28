@@ -27,3 +27,8 @@ downgrade:
 
 seed:
 	docker compose exec api python -m app.seed.main
+
+# tests
+
+tests:
+	docker compose exec api pytest
