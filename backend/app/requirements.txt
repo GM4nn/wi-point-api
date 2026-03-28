@@ -18,3 +18,4 @@ anyio[trio]==4.0
 pytest-cov==6.0
 factory-boy==3.3
 graphql-core==3.2
+graphql-query==1.4.0
