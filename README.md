@@ -179,6 +179,16 @@ wi-point-api/
 
 - Docker y Docker Compose
 
+### Archivo .env con variables de entorno
+
+```
+POSTGRES_DB=
+POSTGRES_PASSWORD=
+POSTGRES_PORT=
+POSTGRES_SERVER=
+POSTGRES_USER=
+```
+
 ### Comandos
 
 Todos los comandos estan en el `Makefile`:
