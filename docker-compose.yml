@@ -25,7 +25,8 @@ services:
     environment:
       - PYTHONUNBUFFERED=1
     depends_on:
-      - db
+      db:
+        condition: service_healthy
     volumes:
       - ./backend:/code
 
