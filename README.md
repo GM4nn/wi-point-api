@@ -77,7 +77,7 @@ stmt = stmt.on_conflict_do_update(
 
 ### Diagrama de Flujo
 
-![Diagrama de flujo](docs/diagrama.png)
+![Diagrama de flujo](Flujo carga de datos.png)
 
 Despues de insertar todos los batches, se actualizan las columnas PostGIS `location` para los registros que aun no la tienen:
 
