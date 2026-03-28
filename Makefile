@@ -32,3 +32,6 @@ seed:
 
 tests:
 	docker compose exec api pytest
+
+coverage:
+	docker compose exec api pytest --cov=app --cov-report=term-missing
